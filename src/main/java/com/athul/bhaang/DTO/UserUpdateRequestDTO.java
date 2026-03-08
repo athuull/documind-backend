@@ -1,0 +1,16 @@
+package com.athul.bhaang.DTO;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class UserUpdateRequestDTO {
+
+    private Long id;
+    private String name;
+    private String email;
+    private Long roleId;
+    private Boolean isActive;
+    private Long version;
+}
