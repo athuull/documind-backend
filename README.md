@@ -34,23 +34,28 @@ DocuMind is an enterprise-grade Insurance Agency Management System and intellige
 
 ## 📋 Prerequisites
 
-- **Java Development Kit (JDK)**: Version 21 or higher
-- **PostgreSQL**: Version 14 or higher running locally or in Docker
+- **Java Development Kit (JDK)**: Version 21 or higher (for local manual builds)
+- **PostgreSQL**: Version 14 or higher (or Docker)
+- **Docker & Docker Compose**: Recommended for zero-setup containerized deployment
 - **OpenRouter / OpenAI API Key**: For Spring AI document extraction and RAG chat
 
 ---
 
 ## ⚙️ Configuration & Environment Variables
 
-DocuMind supports configuration via environment variables with fallback defaults in `src/main/resources/application.properties`:
+DocuMind supports configuration via environment variables with fallback defaults in `src/main/resources/application.properties`. A template is provided in [`.env.example`](file:///Users/athul/github/documind-backend/.env.example):
 
-| Environment Variable | Description | Default Value |
+```bash
+cp .env.example .env
+```
+
+| Environment Variable | Description | Default / Docker Value |
 |---|---|---|
-| `SPRING_DATASOURCE_URL` | PostgreSQL JDBC connection URL | `jdbc:postgresql://localhost:5432/insurance_db` |
-| `SPRING_DATASOURCE_USERNAME` | Database username | `athul` |
-| `SPRING_DATASOURCE_PASSWORD` | Database password | *(empty)* |
+| `SPRING_DATASOURCE_URL` | PostgreSQL JDBC connection URL | `jdbc:postgresql://database:5432/insurance_db` (Docker) / `localhost:5432` (local) |
+| `SPRING_DATASOURCE_USERNAME` | Database username | `postgres` (Docker) / `athul` (local) |
+| `SPRING_DATASOURCE_PASSWORD` | Database password | `postgres` |
 | `SPRING_JPA_HIBERNATE_DDL_AUTO` | Hibernate schema management | `update` |
-| `OPENROUTER_API_KEY` | OpenRouter or OpenAI API key | *(configured key)* |
+| `OPENROUTER_API_KEY` | OpenRouter or OpenAI API key | *(set in .env)* |
 | `SPRING_AI_OPENAI_BASE_URL` | API Base URL | `https://openrouter.ai/api` |
 | `SPRING_AI_OPENAI_MODEL` | LLM model name | `stepfun/step-3.5-flash:free` |
 | `JWT_SECRET_KEY` | HMAC-SHA256 secret key for signing JWTs | *(256-bit hex secret)* |
@@ -58,26 +63,104 @@ DocuMind supports configuration via environment variables with fallback defaults
 
 ---
 
-## 🚀 Getting Started
+## 🐳 Docker Compose Quickstart (Recommended)
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/athul/documind-backend.git
-cd documind-backend
+DocuMind includes a production-ready `docker-compose.yml` that boots the entire stack—database, Spring Boot backend, and Next.js frontend—with one command:
+
+```
++------------------------------------------------------------------------+
+|                            docker compose                              |
++------------------------------------------------------------------------+
+              |                                            |
+              v                                            v
++---------------------------+                +---------------------------+
+|     documind-frontend     |                |      documind-backend     |
+|  Next.js 16 Standalone    |                | Spring Boot 4 / Java 21   |
+|  Port: 3000               |                | Port: 8080                |
++---------------------------+                +---------------------------+
+              |                                            |
+              |   Client-side Browser API Requests         v
+              +---------------------------------> +---------------------------+
+                                                  |        documind-db        |
+                                                  |   PostgreSQL 17 Alpine    |
+                                                  |   Port: 5432              |
+                                                  +---------------------------+
 ```
 
-### 2. Set Up Database
+### 1. Configure Environment (Optional)
+Copy the environment template and configure your OpenRouter API key:
+```bash
+cp .env.example .env
+# Edit .env and set OPENROUTER_API_KEY=your_key_here
+```
+
+### 2. Build & Launch the Stack
+Run from the `documind-backend` directory (or workspace root):
+```bash
+docker compose up --build
+```
+To run in the background (detached mode):
+```bash
+docker compose up --build -d
+```
+
+### 3. Verify Running Services
+```bash
+docker compose ps
+```
+
+| Service | Container Name | Internal Port | Host Port | Status |
+|---|---|---|---|---|
+| **Database** | `documind-db` | `5432` | `localhost:5432` | Healthy (pg_isready) |
+| **Backend** | `documind-backend` | `8080` | `localhost:8080` | Up |
+| **Frontend** | `documind-frontend` | `3000` | `localhost:3000` | Up |
+
+### 4. Access the Application
+- **Frontend Web UI**: [http://localhost:3000](http://localhost:3000)
+- **Backend REST API**: [http://localhost:8080](http://localhost:8080)
+- **Interactive Swagger Docs**: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+- **OpenAPI Schema**: [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
+
+### 5. Useful Docker Commands
+```bash
+# View live backend logs
+docker compose logs -f backend
+
+# View live frontend logs
+docker compose logs -f frontend
+
+# Stop containers without losing data
+docker compose down
+
+# Stop containers and reset database volume
+docker compose down -v
+```
+
+---
+
+## 🚀 Manual Local Development Setup
+
+If you prefer running the services locally without Docker:
+
+### 1. Set Up Local Database
 Create a PostgreSQL database named `insurance_db`:
 ```bash
 psql -U postgres -c "CREATE DATABASE insurance_db;"
 ```
 
-### 3. Run the Application
+### 2. Run Backend
 ```bash
 ./mvnw spring-boot:run
 ```
-
 The server starts on port `8080`. Default roles (`ADMIN` and `USER`) are automatically seeded by `DataInitializer` upon startup.
+
+### 3. Run Frontend
+In a separate terminal:
+```bash
+cd ../documind-frontend
+npm install
+npm run dev
+```
 
 ### 4. Explore Interactive API Docs
 Open your browser and navigate to:
