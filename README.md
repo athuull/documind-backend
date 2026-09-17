@@ -173,10 +173,10 @@ http://localhost:8080/swagger-ui/index.html
 ## REST API Reference
 
 ### 1. Authentication (`/api/auth`)
-| Method | Endpoint | Description | Auth Required |
-|---|---|---|---|
-| `POST` | `/api/auth/signup` | Register a new user account | No |
-| `POST` | `/api/auth/login` | Authenticate and obtain JWT Bearer token | No |
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/auth/signup` | Register a new user account |
+| `POST` | `/api/auth/login` | Authenticate and obtain JWT Bearer token |
 
 #### Login Request Example:
 ```json
