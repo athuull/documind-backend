@@ -19,9 +19,9 @@
 	<!-- Project Info                                                          -->
 	<!-- ════════════════════════════════════════════════════════════════════ -->
 	<groupId>com.athul</groupId>
-	<artifactId>bhaang</artifactId>
+	<artifactId>documind</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>bhaang</name>
+	<name>documind</name>
 	<description>An AI document intelligence layer for insurance operations.</description>
 
 	<!-- ════════════════════════════════════════════════════════════════════ -->
