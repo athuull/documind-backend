@@ -4,7 +4,7 @@ DocuMind is an enterprise-grade Insurance Agency Management System and intellige
 
 ---
 
-## 🌟 Key Features
+## Key Features
 
 - **Automated AI Policy Extraction**: Upload scanned or digital PDF insurance policies; DocuMind parses the document using Apache PDFBox, feeds cleaned content to Spring AI LLM prompts, and extracts structured data classified strictly into `HEALTH` or `VEHICLE` policy types.
 - **RAG Policy Assistant**: Ingests uploaded policy documents into a vector store with chunking and token embeddings. Insurance agents and clients can query policies in plain English (e.g., *"What is my deductible for accident damage?"*) using grounded context and policy citations.
@@ -16,7 +16,7 @@ DocuMind is an enterprise-grade Insurance Agency Management System and intellige
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 | Layer | Technology |
 |---|---|
@@ -32,7 +32,7 @@ DocuMind is an enterprise-grade Insurance Agency Management System and intellige
 
 ---
 
-## 📋 Prerequisites
+## Prerequisites
 
 - **Java Development Kit (JDK)**: Version 21 or higher (for local manual builds)
 - **PostgreSQL**: Version 14 or higher (or Docker)
@@ -41,7 +41,7 @@ DocuMind is an enterprise-grade Insurance Agency Management System and intellige
 
 ---
 
-## ⚙️ Configuration & Environment Variables
+## Configuration & Environment Variables
 
 DocuMind supports configuration via environment variables with fallback defaults in `src/main/resources/application.properties`. A template is provided in [`.env.example`](file:///Users/athul/github/documind-backend/.env.example):
 
@@ -63,7 +63,7 @@ cp .env.example .env
 
 ---
 
-## 🐳 Docker Compose Quickstart (Recommended)
+## Docker Compose Quickstart (Recommended)
 
 DocuMind includes a production-ready `docker-compose.yml` that boots the entire stack—database, Spring Boot backend, and Next.js frontend—with one command:
 
@@ -138,7 +138,7 @@ docker compose down -v
 
 ---
 
-## 🚀 Manual Local Development Setup
+## Manual Local Development Setup
 
 If you prefer running the services locally without Docker:
 
@@ -170,7 +170,7 @@ http://localhost:8080/swagger-ui/index.html
 
 ---
 
-## 📡 REST API Reference
+## REST API Reference
 
 ### 1. Authentication (`/api/auth`)
 | Method | Endpoint | Description | Auth Required |
@@ -369,7 +369,7 @@ GET /api/chat/ask?clientId=1&question=What%20is%20the%20coverage%20amount%20for%
 
 ---
 
-## 🧪 Testing
+## Testing
 
 Execute the comprehensive automated test suite:
 ```bash
@@ -383,7 +383,7 @@ To run a single test class:
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 documind-backend/
@@ -414,5 +414,5 @@ documind-backend/
 
 ---
 
-## 🛡️ License
+## License
 Proprietary — Developed for Insurance Operations Intelligence.
